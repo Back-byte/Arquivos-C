@@ -1,0 +1,160 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 3
+
+void merge(int vetor[], int inicio, int meio, int fim) {
+int com1 = inicio, com2 = meio+1, comAux = 0, vetAux[fim-inicio+1];
+while(com1<=meio && com2<=fim) {
+if(vetor[com1] <= vetor[com2]) {
+vetAux[comAux] = vetor[com1];
+com1++;
+} else {
+vetAux[comAux] = vetor[com2];
+com2++;
+}
+comAux++;
+}
+while(com1<=meio) { // Se tiver elementos na metade 1
+vetAux[comAux] = vetor[com1];
+comAux++;com1++;
+}
+while(com2<=fim) { // Se tiver elementos na metade 2
+vetAux[comAux] = vetor[com2];
+comAux++;com2++;
+}
+for(comAux=inicio;comAux<=fim;comAux++) { // Volta ao original
+vetor[comAux] = vetAux[comAux-inicio];
+}
+}
+
+void mergeSort(int* vetor, int inicio, int fim) {
+if (inicio < fim) {
+int meio = (inicio+fim)/2;
+mergeSort(vetor, inicio, meio);
+mergeSort(vetor, meio+1, fim);
+merge(vetor, inicio, meio, fim);
+}
+}
+
+
+void bubble(int* v, int tam) {
+int i, fim, aux;
+for (fim = tam-1; fim > 0; --fim) {
+for (i = 0; i < fim; ++i) {
+if (v[i] > v[i+1]) {
+aux = v[i];
+v[i] = v[i+1];
+v[i+1] = aux;
+            }
+        }
+    }
+}
+
+void selection_sort(int *v, int tam) {
+int i, j, min, aux;
+for(i=0; i < (tam-1); i++) {
+min = i;
+for(j=(i+1); j < tam; j++) {
+if(v[j] < v[min])
+min = j;
+
+}
+if(v[i] != v[min]) {
+aux = v[i];
+v[i] = v[min];
+v[min] = aux;
+}
+}
+}
+
+void insertion(int *v, int tam) {
+int i=0;
+int j=1;
+int aux=0;
+while(j < tam) {
+aux = v[j];
+i = j - 1;
+while ((i >= 0) && (v[i] > aux)) {
+v[i + 1] = v[i];
+i = i - 1;
+}
+v[i + 1] = aux;
+j = j + 1;
+}
+}
+
+int main(){
+
+int vetor[MAX];
+
+for (int i = 0; i < MAX; i++){
+
+    printf("Insira o valor da %d° posição: ", i+1);
+    scanf("%d", &vetor[i]);
+}
+
+printf("\nElementos: \n\n");
+
+for (int i = 0; i < MAX; i++){
+
+ printf("%d ",vetor[i]);
+
+}
+
+
+int opcao = 0;
+
+
+do{
+
+printf("\n\n1.Insertion\n2.Selection\n3.Bubble\n4.Merge\n");
+printf("Ordenação desejada: ");
+    scanf("%d", &opcao);
+
+switch(opcao){
+
+case 1:
+
+    insertion(&vetor,MAX);
+
+    break;
+
+case 2:
+
+    selection_sort(&vetor,MAX);
+
+    break;
+case 3:
+
+    bubble(&vetor,MAX);
+
+break;
+
+case 4:
+
+    mergeSort(vetor, 0, MAX-1);
+
+    break;
+
+default:
+    printf("\nInsira uma opção válida!");
+    break;
+}
+
+}
+
+while(opcao != 1  && opcao != 2 && opcao != 3 && opcao != 4);
+
+printf("\nElementos ordenados: \n\n");
+
+for (int i = 0; i < MAX; i++){
+
+ printf("%d ",vetor[i]);
+
+}
+
+
+
+return 0;
+}
