@@ -1,0 +1,135 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 10
+
+int busca_binaria(int v[], int chave, int tam) {
+int esq = 0, meio, dir = tam-1;
+while (esq <= dir) {
+meio = (esq + dir) / 2;
+if (v[meio] < chave) {
+esq = meio+1;
+} else {
+if (v[meio] > chave) {
+dir = meio-1;
+} else {
+return meio;
+        }
+    }
+}
+return -1;
+}
+
+void bubble(int* v, int tam) {
+int i, fim, aux;
+for (fim = tam-1; fim > 0; --fim) {
+for (i = 0; i < fim; ++i) {
+if (v[i] > v[i+1]) {
+aux = v[i];
+v[i] = v[i+1];
+v[i+1] = aux;
+            }
+        }
+    }
+}
+
+int busca_sequencial(int v[], int chave, int tam){
+int i;
+
+for (i = 0; i < MAX; i++){
+
+    if (v[i] == chave){
+        return i;
+    }
+}
+
+if (i == MAX) {
+        return -1;
+    }
+}
+
+void exibirVetor(int v[], int tam){
+
+for(int i = 0; i < MAX; i++){
+
+   printf("%d ", v[i]);
+
+    }
+}
+
+int main(){
+int opcao, vetor[MAX] = {77,12, 45, 44, 13, 17, 25, 1, 22, 55};
+int cod, encontrado = 0;
+
+do {
+printf("\n1.Busca Sequencial\n2.Busca binária\n3.Exibir vetor\n0.Sair\nOpção desejada: ");
+scanf("%d", &opcao);
+
+switch(opcao){
+
+case 1:
+
+printf("Insira a chave: ");
+scanf("%d", &cod);
+
+ encontrado = busca_sequencial(vetor,cod,MAX);
+
+if (encontrado == -1){
+
+    printf("\nChave não encontrada!\n");
+
+}
+
+else{
+
+    printf("\nPosição: %d", encontrado+1);
+
+}
+
+break;
+
+case 2:
+
+bubble(&vetor, MAX);
+
+printf("Insira a chave: ");
+scanf("%d", &cod);
+
+ encontrado = busca_binaria(vetor,cod,MAX);
+
+if (encontrado == -1){
+
+    printf("\nChave não encontrada!\n");
+
+}
+
+else{
+
+    printf("\nPosição: %d", encontrado+1);
+
+}
+
+break;
+
+case 3:
+
+exibirVetor(vetor,MAX);
+
+break;
+
+default:
+
+if (opcao != 0){
+printf("Insira uma opção válida!\n");
+}
+break;
+
+}
+
+}
+
+while(opcao != 0);
+
+
+return 0;
+}
